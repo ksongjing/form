@@ -1,0 +1,103 @@
+@media(min-width: 760px){
+  .FormGame{
+    width:100%;
+    .form-container{
+      border:1px solid #e5e5e5;
+      margin-bottom:72px;
+      .for-title{
+        color:#000;
+        font-weight:100;
+        font-size:24px;
+        height:70px;
+        line-height:84px;
+        border-bottom:1px solid #e5e5e5;
+        margin-bottom:26px;
+      }
+      .form-content{
+        .form-text{
+          font-size:14px;
+          color:#000;
+          margin-top:30px;
+          font-weight:100;
+          .form-name{
+            display: inline-block;
+            width: 66px;
+            text-align:right;
+          }
+          .btn{
+            border:0;
+            outline: none;
+            border:1px solid #ccc;
+            color:#fff;
+            background:#63c653;
+            width:218px;
+            height:40px;
+            font-size:14px;
+            margin:50px 70px;
+          }
+          .know{
+            display: inline-block;
+            width:449px;
+            text-align:left;
+            margin-left:16px;
+            .form-label{
+              display: inline-block;
+              width:106px;
+              height:38px;
+              border:1px solid #ccc;
+            }
+            .form-size{
+              width:100%;
+              height:36px;
+              border:0;
+              outline: none;
+              border:1px solid #ccc;
+              text-indent:1em;
+              background:#fafafa;
+            }
+            ul,li{
+              list-style: none;
+              margin:0;
+              padding:0;
+              display: inline-block;
+            }
+            .form-pull{
+              width:100%;
+              height:36px;
+              border:1px solid #ccc;
+              overflow: hidden;
+              li{
+                width:100%;
+                height:36px;
+                line-height:36px;
+                text-indent: 1em;
+              }
+            }
+            .price{
+              width:250px;
+              height:38px;
+            }
+            .language{
+              width:16px;
+              height:16px;
+              vertical-align:top;
+              color:red;
+            }
+            .text{
+              margin:0 20px 0 10px;
+            }
+            input:focus{
+              border:1px solid #63c653;
+              background:#fff;
+            }
+            select:focus{
+              border:1px solid #63c653;
+              background:#fff;
+            }
+          }
+        }
+
+      }
+    }
+  }
+}

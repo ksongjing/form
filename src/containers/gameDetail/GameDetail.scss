@@ -1,0 +1,24 @@
+@import "../../Theme";
+
+.gameDetail{
+  background: white ;
+
+  .cententView{
+    width: $mobile-container;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-bottom: 50px;
+  }
+}
+
+@media (min-width: 760px) {
+  .gameDetail{
+    background: white ;
+
+    .cententView{
+      width: auto;
+      margin-bottom: 50px;
+    }
+  }
+}
