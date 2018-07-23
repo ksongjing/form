@@ -266,7 +266,7 @@ class FormGame extends Component {
                     <div className="form-text">
                         <span className="form-name vm-middle">推广图</span>
                         <div className="know vm-middle">
-                             <p><img src={this.state.thumbnail} width="450px" height="180px"/></p>
+                             <p><img src={this.state.thumbnail} className="file-image"/></p>
                              <ImageUploader
                                     withPreview={false}
                                     withIcon={false}
@@ -346,6 +346,7 @@ class FormGame extends Component {
                             <input type="text" className="form-size"/>
                         </div>
                     </div>
+                    {/*提交*/}
                     <div className="form-text">
                         <button type="submit" onClick = {this.handleSubmit.bind(this)} className="btn">提交</button>
                     </div>
