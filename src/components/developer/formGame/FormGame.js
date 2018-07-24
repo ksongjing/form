@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 // https://github.com/JakeHartnell/react-images-upload api这是使用api
-// 按钮先不会样式都行，就用自带的select。先实现功能
 // cnpm install --save react-images-upload
 import ImageUploader from 'react-images-upload';
 import './FormGame.scss';
@@ -14,22 +13,64 @@ class FormGame extends Component {
         this.onDropSingle = this.onDropSingle.bind(this);
         this.state = {
             pictures: [],
-            thumbnail: "http://114.215.82.77:9000/public/imgUpload/1532276062098.jpg",
+            language:[],
+            arr:[],
             canSubmit: false,
             uploadBtnName:{
                     zh: '上传图片',
                     en: 'upload picture'
             },
             labelNames:{
-                game_name:{
+                name:{
                     zh:'游戏名称',
                     en:'game name'
+                },
+                game_type:{
+                    zh:'游戏类型',
+                    en:'game type'
+                },
+                devloper:{
+                    zh:'开发团队',
+                    en:'development team'
                 },
                 language:{
                     zh: '语言',
                     en: 'language'
-                }
-                // 更多自己去拓展
+                },
+                game_status:{
+                    zh: '游戏状态',
+                    en: 'game status'
+                },
+                game_tag:{
+                    zh: '热门标签',
+                    en: 'game tag'
+                },
+                game_block:{
+                    zh: '所在主链',
+                    en: 'belong block'
+                },
+                game_token:{
+                    zh: '所用币种',
+                    en: 'game token'
+                },
+                game_site:{
+                    zh: '网站入口',
+                    en: 'game site'
+                },
+                icon:{
+                    zh: '推广图',
+                    en: 'Promotion figure'
+                },
+                pictures:{
+                    zh: '游戏截图',
+                    en: 'screenshots'
+                },
+                email:"Email",
+                phone:"Phone",
+                wechat:"Wechat",
+                github:"Github",
+                twitter:"Twitter",
+                telegram:"Telegram"
             },
             data:{
                 game_block:{
@@ -47,7 +88,7 @@ class FormGame extends Component {
                 language:{
                     zh: {},
                     en: {}
-                },
+                }
             },
             lang: this.getLang()
         };
@@ -76,26 +117,47 @@ class FormGame extends Component {
         // 组装数据
         let refsObj = this.refs;
         let params = {
-            game_name: refsObj.game_name.value,
-            game_team: refsObj.game_team.value,
+            name: refsObj.name.value,
+            game_type: refsObj.game_type.value,
+            devloper: refsObj.devloper.value,
+            language: refsObj.language.checked,
             game_status: refsObj.game_status.value,
-            thumbnail: this.state.thumbnail, //缩略图
-            pictures: this.state.pictures //产品截图
-            // 更多自己去拼接
+            // game_tag:refsObj.game_tag.value,
+            game_block: refsObj.game_block.value,
+            game_token: refsObj.game_token.value,
+            icon: this.state.icon, //缩略图
+            pictures: this.state.pictures, //产品截图
+            email: refsObj.email.value,
+            phone: refsObj.phone.value,
+            wechat:refsObj.wechat.value,
+            github:refsObj.github.value,
+            twitter:refsObj.twitter.value,
+            telegram:refsObj.telegram.value
         }
         console.log("数据格式：", params);
+        let url = "https://test.fair.game/api/v1/games/submit_game_info/";
+        fetch(url,{
+            method:'POST',
+            body:params,
+        }).then(resp => resp.json())
+        .then(json => {
+          console.log(json);
+        })
+        .catch(error => {
+          console.error(error);
+        })
         e.preventDefault();
     }
     // 获得配置数据
     fetchData() {
-        let url = "http://rap2api.taobao.org/app/mock/8850/api/v1/games/game_config/";
+        let url = "https://test.fair.game/api/v1/games/game_config/";
          // 异步请求数据
          fetch(url)
              .then(resp => resp.json())
              // 发送数据请求成功的消息
              .then(json => {
                  if (json.msg === 'success') {
-                     console.log(json.data,33333333333333);
+                     // console.log(json.data,33333333333333);
                      this.setState({
                          data: json.data
                      })
@@ -142,10 +204,8 @@ class FormGame extends Component {
     }
     // 上传图片
     uploadAjaxFile(file) {
-        // 这个借口，公司给。这个是我的测试接口，注意。要安装一个东西
         let url = "http://114.215.82.77:9000/goods/singleUpload";
         var formdata = new FormData();
-        //formdata.append('这个根据后台给的上传图片名', 'uploadImage');
         formdata.append('file', file);
 
         return fetch(url, {
@@ -157,25 +217,45 @@ class FormGame extends Component {
              });
     }
     onDrop(pictureFiles, pictureDataURLs) {
-        let file = pictureFiles[pictureFiles.length - 1]
-        this.uploadAjaxFile(file).then(json => { // 发送数据请求成功的消息
-            let newPicUrl = `http://114.215.82.77:9000` + json.url;
-            let newPictures = this.state.pictures;
-                newPictures.push(newPicUrl);
-            this.setState({
-                pictures: newPictures
-            })
-        });
+        this.setState({
+            pictures:pictureDataURLs
+        })
     }
     onDropSingle(pictureFiles, pictureDataURLs) {
-        let file = pictureFiles[pictureFiles.length-1]
-        this.uploadAjaxFile(file).then(json => { // 发送数据请求成功的消息
-            let newPicUrl = `http://114.215.82.77:9000` + json.url;
-            this.setState({
-                thumbnail: newPicUrl
-            })
-        });
+        let imgBase64 = pictureDataURLs[pictureDataURLs.length - 1]
+        this.setState({
+            icon: imgBase64
+        })
     }
+    //邮箱
+    emailBtn(e){
+        let email = this.refs.email.value;
+        let ePattern = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+        if(ePattern.test(email)){
+            let docEmail = document.getElementById('spEmail');
+            docEmail.style.color = "green";
+            docEmail.innerText = '✔';
+        }else{
+            let docEmail = document.getElementById('spEmail');
+            docEmail.style.color = "red";
+            docEmail.innerText = '✖';
+        }
+    }
+    //手机号码
+    phoneBtn(e){
+        let phone = this.refs.phone.value;
+        let pPattern = /^[1][3,4,5,7,8][0-9]{9}$/;
+        if(pPattern.test(phone)){
+            let docPhone = document.getElementById('spPhone');
+            docPhone.style.color = "green";
+            docPhone.innerText = '✔';
+        }else{
+            let docPhone = document.getElementById('spPhone');
+            docPhone.style.color = "red";
+            docPhone.innerText = '✖';
+        }
+    }
+
     render() {
         return (
         <div className="formgame"  ref="form">
@@ -184,14 +264,14 @@ class FormGame extends Component {
                 <div className="form-content">
                     {/*游戏名称*/}
                     <div className="form-text">
-                        <span className="form-name">* {this.state.labelNames.game_name[this.state.lang]}</span>
+                        <span className="form-name">* {this.state.labelNames.name[this.state.lang]}</span>
                         <div className="know">
-                            <input type="text" ref="game_name" name="game_name" className="form-size"/>
+                            <input type="text" ref="name" name="name" className="form-size"/>
                         </div>
                     </div>
                     {/*游戏类型*/}
                     <div className="form-text">
-                        <span className="form-name">游戏类型</span>
+                        <span className="form-name">{this.state.labelNames.game_type[this.state.lang]}</span>
                         <div className="know">
                             <select  ref="game_type" className="form-size" name="game_type">
                                 {
@@ -202,15 +282,15 @@ class FormGame extends Component {
                     </div>
                     {/*开发团队*/}
                     <div className="form-text">
-                        <span className="form-name">开发团队</span>
+                        <span className="form-name">{this.state.labelNames.devloper[this.state.lang]}</span>
                         <div className="know">
-                            <input  ref="game_team" type="text" className="form-size" defaultValue="Amanda Smith"/>
+                            <input  ref="devloper" name="devloper" type="text" className="form-size" />
                         </div>
                     </div>
                     {/*语言*/}
                     <div className="form-text">
                         <span className="form-name">{this.state.labelNames.language[this.state.lang]}</span>
-                        <div className="know">
+                        <div className="know" ref="language" name="language">
                             {
                                 this.getCBList('language')
                             }
@@ -218,7 +298,7 @@ class FormGame extends Component {
                     </div>
                     {/*游戏状态*/}
                     <div className="form-text">
-                        <span className="form-name">游戏状态</span>
+                        <span className="form-name">{this.state.labelNames.game_status[this.state.lang]}</span>
                         <div className="know">
                             <select ref="game_status"  className="form-size" name="game_status">
                                 {
@@ -229,19 +309,20 @@ class FormGame extends Component {
                     </div>
                     {/*热门标签*/}
                     <div className="form-text">
-                        <span className="form-name">热门标签</span>
+                        <span className="form-name">{this.state.labelNames.game_tag[this.state.lang]}</span>
                         <div className="know">
-                            <span className="form-label">体育</span>
-                            <span className="form-label">冒险</span>
+                            <input className="form-label" ref=""/>
+                            <input className="form-label" ref=""/>
+                            <input className="form-label" ref=""/>
                         </div>
                     </div>
                     {/*所在主链*/}
                     <div className="form-text">
                         <div className="form-name">
-                            <span className="main">所在主链</span>
+                            <span className="main">{this.state.labelNames.game_block[this.state.lang]}</span>
                         </div>
                         <div className="know">
-                            <select className="form-size" name="" id="">
+                            <select ref="game_block" className="form-size" name="game_block">
                                 {
                                     this.getOptionList('game_block')
                                 }
@@ -250,37 +331,39 @@ class FormGame extends Component {
                     </div>
                     {/*所用币种*/}
                     <div className="form-text">
-                        <span className="form-name">所用币种</span>
+                        <span className="form-name">{this.state.labelNames.game_token[this.state.lang]}</span>
                         <div className="know">
-                            <input type="text" className="form-size"/>
+                            <input type="text" ref="game_token" name="game_token" className="form-size"/>
                         </div>
                     </div>
                     {/*网站入口*/}
                     <div className="form-text">
-                        <span className="form-name">* 网站入口</span>
+                        <span className="form-name">* {this.state.labelNames.game_site[this.state.lang]}</span>
                         <div className="know">
-                            <input type="text" className="form-size"/>
+                            <input type="text" ref="game_site" name="game_site" className="form-size"/>
                         </div>
                     </div>
                     {/*推广图*/}
                     <div className="form-text">
-                        <span className="form-name vm-middle">推广图</span>
+                        <span className="form-name vm-middle">{this.state.labelNames.icon[this.state.lang]}</span>
                         <div className="know vm-middle">
-                             <p><img src={this.state.thumbnail} width="450px" height="180px"/></p>
+                             <p>
+                                 <img src={this.state.icon} className="figure-image"/>
+                             </p>
                              <ImageUploader
                                     withPreview={false}
                                     withIcon={false}
                                     buttonType="text"
                                     buttonText= {this.state.uploadBtnName[this.getLang()]}
                                     onChange={this.onDropSingle}
-                                    imgExtension={['.jpg', '.gif', '.png', '.gif']}
+                                    imgExtension={['.jpg','.png']}
                                     maxFileSize={5242880}
                             />
                         </div>
                     </div>
                     {/*游戏截图*/}
                     <div className="form-text">
-                        <span className="form-name vm-middle">游戏截图</span>
+                        <span className="form-name vm-middle">{this.state.labelNames.pictures[this.state.lang]}</span>
                         <div className="know vm-middle">
                            <p>
                                {
@@ -299,61 +382,73 @@ class FormGame extends Component {
                                     buttonType="text"
                                     buttonText= {this.state.uploadBtnName[this.getLang()]}
                                     onChange={this.onDrop}
-                                    imgExtension={['.jpg', '.gif', '.png', '.gif']}
+                                    imgExtension={['.jpg','.png']}
                                     maxFileSize={5242880}
                             />
                         </div>
                     </div>
                     {/*Email*/}
                     <div className="form-text">
-                        <span className="form-name">* Email</span>
+                        <span className="form-name">* {this.state.labelNames.email}</span>
                         <div className="know">
-                            <input type="text" className="form-size"/>
+                            <input type="text" ref="email" name="email" className="form-size" onBlur={this.emailBtn.bind(this)} /><span className="validation" id="spEmail"></span>
                         </div>
                     </div>
                     {/*Phone*/}
                     <div className="form-text">
-                        <span className="form-name">Phone</span>
+                        <span className="form-name">{this.state.labelNames.phone}</span>
                         <div className="know">
-                            <input type="text" className="form-size"/>
+                            <input type="text" ref="phone" name="phone" className="form-size" onBlur={this.phoneBtn.bind(this)} /><span className="validation" id="spPhone"></span>
                         </div>
                     </div>
                     {/*Wechat*/}
                     <div className="form-text">
-                        <span className="form-name">Wechat</span>
+                        <span className="form-name">{this.state.labelNames.wechat}</span>
                         <div className="know">
-                            <input type="text" className="form-size"/>
+                            <input type="text" ref="wechat" name="wechat" className="form-size"/>
                         </div>
                     </div>
                     {/*Github*/}
                     <div className="form-text">
-                        <span className="form-name">Github</span>
+                        <span className="form-name">{this.state.labelNames.github}</span>
                         <div className="know">
-                            <input type="text" className="form-size"/>
+                            <input type="text" ref="github" name="github" className="form-size"/>
                         </div>
                     </div>
                     {/*Twitter*/}
                     <div className="form-text">
-                        <span className="form-name">Twitter</span>
+                        <span className="form-name">{this.state.labelNames.twitter}</span>
                         <div className="know">
-                            <input type="text" className="form-size"/>
+                            <input type="text" ref="twitter" name="twitter" className="form-size"/>
                         </div>
                     </div>
                     {/*Telegram*/}
                     <div className="form-text">
-                        <span className="form-name">Telegram</span>
+                        <span className="form-name">{this.state.labelNames.telegram}</span>
                         <div className="know">
-                            <input type="text" className="form-size"/>
+                            <input type="text" ref="telegram" name="telegram" className="form-size"/>
                         </div>
                     </div>
+                    {/*提交*/}
                     <div className="form-text">
                         <button type="submit" onClick = {this.handleSubmit.bind(this)} className="btn">提交</button>
+                    </div>
+                </div>
+            </div>
+            {/*遮罩层*/}
+            <div className="m-modal">
+                <div className="modal_align"></div>
+                <div className="modal_wrap">
+                    <div className="modal_head"></div>
+                    <div className="modal_body"></div>
+                    <div className="modal_foot">
+                        <a href="" className="confirm"></a>
+                        <a href="" className="cancel"></a>
                     </div>
                 </div>
             </div>
         </div>
         );
     }
-
 }
 export default FormGame;

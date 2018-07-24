@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "./DetailSlider.scss";
-import Swiper from "swiper";
+import Swiper from "swiper/dist/js/swiper.min";
 import "swiper/dist/css/swiper.css";
 
 class DetailSlider extends React.Component {
@@ -84,14 +84,6 @@ class DetailSlider extends React.Component {
 
     render() {
         const {items} = this.props;
-
-        let arrows = null;
-        if (this.state.isArrowShow) {
-            arrows = (<div>
-                <div className="swiper-button-prev" />
-                <div className="swiper-button-next" />
-            </div>);
-        }
 
         return (
             <div className="detail-slider" onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave}>

@@ -14,7 +14,7 @@ class FormGame extends Component {
         this.onDropSingle = this.onDropSingle.bind(this);
         this.state = {
             pictures: [],
-            thumbnail: "http://114.215.82.77:9000/public/imgUpload/1532276062098.jpg",
+            // thumbnail: "http://114.215.82.77:9000/public/imgUpload/1532276062098.jpg",
             canSubmit: false,
             uploadBtnName:{
                     zh: '上传图片',
@@ -88,7 +88,8 @@ class FormGame extends Component {
     }
     // 获得配置数据
     fetchData() {
-        let url = "http://rap2api.taobao.org/app/mock/8850/api/v1/games/game_config/";
+        // let url = "http://rap2api.taobao.org/app/mock/8850/api/v1/games/game_config/";
+        let url = "http://rap2.taobao.org/repository/editor?id=8850&mod=21466&itf=171137";
          // 异步请求数据
          fetch(url)
              .then(resp => resp.json())
@@ -157,24 +158,33 @@ class FormGame extends Component {
              });
     }
     onDrop(pictureFiles, pictureDataURLs) {
-        let file = pictureFiles[pictureFiles.length - 1]
-        this.uploadAjaxFile(file).then(json => { // 发送数据请求成功的消息
-            let newPicUrl = `http://114.215.82.77:9000` + json.url;
-            let newPictures = this.state.pictures;
-                newPictures.push(newPicUrl);
-            this.setState({
-                pictures: newPictures
-            })
-        });
+        //二进制流方式
+        this.setState({
+            pictures:pictureDataURLs
+        })
+        // let file = pictureFiles[pictureFiles.length - 1]
+        // this.uploadAjaxFile(file).then(json => { // 发送数据请求成功的消息
+        //     let newPicUrl = `http://114.215.82.77:9000` + json.url;
+        //     let newPictures = this.state.pictures;
+        //         newPictures.push(newPicUrl);
+        //     this.setState({
+        //         pictures: newPictures
+        //     })
+        // });
     }
     onDropSingle(pictureFiles, pictureDataURLs) {
-        let file = pictureFiles[pictureFiles.length-1]
-        this.uploadAjaxFile(file).then(json => { // 发送数据请求成功的消息
-            let newPicUrl = `http://114.215.82.77:9000` + json.url;
-            this.setState({
-                thumbnail: newPicUrl
-            })
-        });
+        //二进制流方式
+        let imgBase64 = pictureDataURLs[pictureDataURLs.length - 1]
+        this.setState({
+            thumbnail: imgBase64
+        })
+        // let file = pictureFiles[pictureFiles.length-1]
+        // this.uploadAjaxFile(file).then(json => { // 发送数据请求成功的消息
+        //     let newPicUrl = `http://114.215.82.77:9000` + json.url;
+        //     this.setState({
+        //         thumbnail: newPicUrl
+        //     })
+        // });
     }
     render() {
         return (

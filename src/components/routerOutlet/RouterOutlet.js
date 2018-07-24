@@ -6,14 +6,13 @@ import Developer from "../../containers/developer/Developer";
 import GameDetail from "../../containers/gameDetail/GameDetail";
 import GameList from "../../containers/gameList/GameList";
 import Home from "../../containers/home/Home";
-import SearchList from "../../containers/searchList/SearchList";
 
 class RouterOutlet extends React.Component {
     render() {
         return (
             <div className="RouterOutlet">
                 <Switch>
-                    <Route path="/search" component={SearchList}/>
+                    <Route path="/list/:key" component={GameList}/>
                     <Route path="/list" component={GameList}/>
                     <Route path="/detail/:id" component={GameDetail}/>
                     <Route path="/dev" component={Developer}/>

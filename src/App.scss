@@ -1,6 +1,38 @@
 .App {
   text-align: center;
   position: relative;
+  .main-container{
+    position: relative;
+    transition: transform 0.4s cubic-bezier(0.4, 0.01, 0.165, 0.99);
+    -webkit-transition: -webkit-transform 0.4s cubic-bezier(0.4, 0.01, 0.165, 0.99);
+    transform: translate3d(0,0,0);
+    -webkit-transform: translate3d(0,0,0);
+    overflow: hidden;
+  }
+  .slidebar {
+    transition: transform 0.4s cubic-bezier(0.4, 0.01, 0.165, 0.99);
+    -webkit-transition: -webkit-transform 0.4s cubic-bezier(0.4, 0.01, 0.165, 0.99);
+    transform: translate3d(250px,0,0);
+    -webkit-transform: translate3d(250px,0,0);
+  }
+}
+.slide-open{
+  overflow: hidden;
+  .main-container {
+    position: relative;
+    transform: translate3d(-250px,0,0);
+   -webkit-transform: translate3d(-250px,0,0);
+    overflow: hidden;
+  }
+  .header{
+    transform: translate3d(-250px,0,0);
+    -webkit-transform: translate3d(-250px,0,0);
+  }
+  .slidebar {
+    transform: translate3d(0,0,0);
+    -webkit-transform: translate3d(0,0,0);
+  }
+
 }
 
 .App-logo {

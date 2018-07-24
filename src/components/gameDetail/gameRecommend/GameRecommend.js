@@ -10,6 +10,17 @@ class GameRecommend extends Component {
         items:  PropTypes.array,
     };
 
+    isZhCn() {
+        const { curLanguage } = this.props;
+        return curLanguage === 'zh_CN';
+    }
+
+    getValue(key){
+        if ( !key || !key.zh || !key.en) { return '--'; }
+
+        return this.isZhCn() ? key.zh : key.en;
+    }
+
     render() {
         const { title, items } = this.props;
         return (
@@ -20,13 +31,13 @@ class GameRecommend extends Component {
                     <div className="gamerecommend-items">
                         {
                             items && items.map(item => {
-                                const {title, picture, url, content} = item;
+                                const {game_name, icon, intro} = item;
                                 return (
-                                    <a className="gamerecommend-item" href={url} target="_blank"  rel="noopener noreferrer" key={picture}>
-                                        <div className="game-item-icon"><img src={picture} alt=""/></div>
+                                    <a className="gamerecommend-item" href={'www.baidu.com'} target="_blank"  rel="noopener noreferrer" key={icon}>
+                                        <div className="game-item-icon"><img src={icon} alt="logo"/></div>
                                         <div className="game-item-descpt">
-                                            <div className="game-item-title">{title}</div>
-                                            <div className="game-item-text">{content}</div>
+                                            <div className="game-item-title">{this.getValue(game_name)}</div>
+                                            <div className="game-item-text">{this.getValue(intro)}</div>
                                         </div>
                                     </a>
                                 );

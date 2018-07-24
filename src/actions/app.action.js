@@ -4,6 +4,10 @@ import _ from "lodash";
 export const LOAD_LANGUAGE = 'LOAD_LANGUAGE';
 export const CHANGE_LANGUAGE = 'CHANGE_LANGUAGE';
 export const INIT_DONE = 'INIT_DONE';
+export const OPEN_SLIDEBAR = 'OPEN_SLIDEBAR';
+export const CLOSE_SLIDEBAR = 'CLOSE_SLIDEBAR';
+export const BODY_SCROLL = 'BODY_SCROLL';
+export const SHOW_SEARCHBOX = 'SHOW_SEARCHBOX';
 
 export const loadLanguages = (data) => {
     return {type: LOAD_LANGUAGE, data: data};
@@ -13,6 +17,18 @@ export const changeLanguage = (language) => {
 };
 export const init = (data) => {
     return {type: INIT_DONE, data: data}
+};
+export const openSlidebar = (data) => {
+    return {type: OPEN_SLIDEBAR}
+};
+export const closeSlidebar = (data) => {
+    return {type: CLOSE_SLIDEBAR}
+};
+export const bodyScroll = (data) => {
+    return {type: BODY_SCROLL,data:data}
+};
+export const showSearchBox = (data) => {
+    return {type: SHOW_SEARCHBOX, data: data};
 };
 
 const localData = [
@@ -24,17 +40,6 @@ const localData = [
         name: "简体中文",
         value: "zh_CN"
     }];
-
-const chooseLocale = () => {
-    switch (navigator.language.split('_')[0]) {
-        case 'en':
-            return 'en_US';
-        case 'zh':
-            return 'zh_CN';
-        default:
-            return 'en_US';
-    }
-};
 
 /***
  * @Author ChenLiheng
@@ -61,13 +66,13 @@ export const loadLocalData = () => {
         cookieLocaleKey: "lang"
     });
 
-    if (!_.find(localData, { value: currentLocale })) {
+    if (!_.find(localData, {value: currentLocale})) {
         currentLocale = "en_US";
     }
     console.log(currentLocale);
     return (dispatch) => {
         dispatch(changeLanguage(currentLocale));
-        fetch(`/i18n/${currentLocale}.json`)
+        fetch(`./i18n/${currentLocale}.json`)
             .then(data => {
                 // console.log(data.json());
                 return data.json();
@@ -83,6 +88,35 @@ export const loadLocalData = () => {
         });
     }
 };
+
+export const switchSlideBar = (statu) => {
+    return (dispatch) => {
+        statu ? dispatch(closeSlidebar()) : dispatch(openSlidebar());
+    }
+};
+
+/***
+ * @Author ChenLiheng
+ * @Desc 更新当前页面的滚动状态
+ * @Date 2018/7/23 16:17
+ **/
+export const updateBodyScroll = (data) => {
+    return (dispatch) => {
+        dispatch(bodyScroll(data));
+    }
+};
+
+/***
+ * @Author ChenLiheng
+ * @Desc 手机端显示搜索框
+ * @Date 2018/7/23 17:14
+ **/
+export const switchSearchBox = (data) => {
+    return (dispatch) => {
+        dispatch(showSearchBox(data));
+    }
+};
+
 
 
 

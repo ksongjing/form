@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
-import './GameCateGory.scss'
-import PropTypes from 'prop-types';
+import styles from "./GameCategory.scss"
+import classNames from 'classnames/bind';
 
-class GameCateGory extends Component {
+let cx = classNames.bind(styles);
+
+class GameCategory extends Component {
     static propTypes = {};
 
     constructor(props) {
@@ -19,7 +21,11 @@ class GameCateGory extends Component {
                     <div className="gamecatecory-items">
                         {
                             items && items.map((item, index) => {
-                                return (<div className="gamecatecory-item" key={index}
+                                let itemClass = cx({
+                                    "gamecatecory-item": true,
+                                    "gamecatecory-item-selected": this.state.curTab === index
+                                });
+                                return (<div className={itemClass} key={index}
                                              onClick={(e) => this.changeTab(index, e)}>{item}</div>);
                             })
                         }
@@ -36,4 +42,4 @@ class GameCateGory extends Component {
         // todo 切换游戏列表的数据
     }
 }
-export default GameCateGory;
+export default GameCategory;

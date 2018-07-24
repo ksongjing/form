@@ -1,6 +1,6 @@
-export const LOADING_DATA = 'LOADING_DATA';
-export const LOAD_SUCCESS = 'LOAD_SUCCESS';
-export const LOAD_FAILED = 'LOAD_FAILED';
+export const LOADING_DATA = 'DETAIL_LOADING_DATA';
+export const LOAD_SUCCESS = 'DETAIL_LOAD_SUCCESS';
+export const LOAD_FAILED = 'DETAIL_LOAD_FAILED';
 
 export const loadingData = () => {
     return {type: LOADING_DATA}
@@ -17,7 +17,12 @@ export const loadFailed = () => {
  * @return {function(*)}
  */
 export const getDetailData = (game_info_id) => {
-    let url = "https://fair.game:8080/cms/v1/game_info/?game_info_id=" + (game_info_id || '57');
+    if ( !game_info_id || game_info_id.length === 0 ) { return null; }
+    let url = "http://test.fair.game/api/v1/games/{gid}/info/";
+    if (url.indexOf('{gid}') === -1) {
+        return null;
+    }
+    url = url.replace('{gid}', game_info_id);
     return (dispatch) => {
         // 发送LoadingData消息
         dispatch(loadingData());

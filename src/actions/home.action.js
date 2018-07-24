@@ -28,8 +28,10 @@ export const changeLanguage = (language) => {
  * 查询首页模板数据异步Action
  * @return {function(*)}
  */
-export const getIndexData = () => {
-    let url = "https://fair.game:8080/cms/v1/website/?channel_id=3&client=pc&language=zh";
+export const getIndexData = (lang) => {
+    let client = /(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent) ? "mobile" : "pc";
+    lang = lang.slice(0,2);
+    let url = `https://fair.game:8080/cms/v1/website/?channel_id=3&client=${client}&language=${lang}`;
     return (dispatch) => {
         // 发送LoadingData消息
         dispatch(loadingData());

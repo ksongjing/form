@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import "./Slide.scss"
-import Swiper from 'swiper';
+import Swiper from 'swiper/dist/js/swiper.min';
 import 'swiper/dist/css/swiper.css';
 
 class Slide extends React.Component {

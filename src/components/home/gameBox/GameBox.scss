@@ -6,15 +6,14 @@
   margin-bottom: 0.4rem;
   cursor: pointer;
   text-decoration: none;
-  transition: filter 0.4s linear;
-  -moz-transition: -moz-filter 0.4s linear;
-  -webkit-transition: -webkit-filter 0.4s linear;
-  -o-transition: -o-filter 0.4s linear;
+  transition: all .3s ease-out;
+  background: white;
   &:hover {
-    -webkit-filter: brightness(0.8);
-    -o-filter: brightness(0.8);
-    -moz-filter: brightness(0.8);
-    filter: brightness(0.8);
+    box-shadow: 0 20px 40px 0px rgba(0,0,0,0.08);
+    border-bottom-color: white;
+    .gamebox-name{
+      color: $color-main-dark;
+    }
   }
   .gamebox-top {
     position: relative;
@@ -25,6 +24,7 @@
     }
     .gamebox-float {
       position: absolute;
+      display: none;
       height: 43px;
       bottom: 0;
       left: 0;
@@ -41,26 +41,36 @@
         justify-content: center;
       }
     }
+    &:hover{
+      .gamebox-float{
+        display: block;
+      }
+    }
   }
   .gamebox-name {
     color: $color-dark;
     font-size: 0.28rem;
-    margin-top: 0.20rem;
+    margin: 0.1rem;
     text-align: left;
   }
   .gamebox-desc {
     color: $color-gray;
     font-size: 0.24rem;
-    margin-top: 0.1rem;
+    margin: 0.1rem;
+    line-height: 1.4;
     text-align: left;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
   }
 }
 
 @media (min-width: $min-width) {
   .gamebox {
-    width: 288.75px;
+    width: 286.75px;
     margin-right: 15px;
-    margin-bottom: 24px;
+    margin-bottom: 15px;
+    border: 1px solid #EEEEEE;
     .gamebox-top {
       position: relative;
       height: 161px;
@@ -90,14 +100,14 @@
     .gamebox-name {
       color: $color-dark;
       font-size: 16px;
-      margin-top: 12px;
+      margin: 15px 15px 0;
       text-align: left;
     }
     .gamebox-desc {
       color: $color-gray;
       font-size: 14px;
-      margin-top: 6px;
       text-align: left;
+      margin: 6px 15px 10px;
     }
   }
 }

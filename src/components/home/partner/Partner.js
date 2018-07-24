@@ -15,25 +15,28 @@ class Partner extends Component {
 
     render() {
         const {title, items} = this.props;
-        return (
-            <div className="partner">
-                <div className="container partner-container">
-                    <h2>{title}</h2>
-                    <div className="partner-items">
-                        {
-                            items && items.map(item => {
-                                const {title, picture, url} = item;
-                                return (
-                                    <a href={url} target="_blank" rel="noopener noreferrer" key={picture}>
-                                        <img src={picture} alt={title}/>
-                                    </a>
-                                )
-                            })
-                        }
+        if (items && items.length > 0) {
+            return (
+                <div className="partner">
+                    <div className="container partner-container">
+                        <h2>{title}</h2>
+                        <div className="partner-items">
+                            {
+                                items && items.map(item => {
+                                    const {title, picture, url} = item;
+                                    return (
+                                        <a href={url} target="_blank" rel="noopener noreferrer" key={picture}>
+                                            <img src={picture} alt={title}/>
+                                        </a>
+                                    )
+                                })
+                            }
+                        </div>
                     </div>
                 </div>
-            </div>
-        );
+            );
+        }
+        return (null);
     }
 }
 

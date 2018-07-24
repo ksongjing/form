@@ -1,7 +1,6 @@
 import {
     LOADING_DATA,
-    LOAD_SUCCESS,
-    LOAD_FAILE
+    LOAD_SUCCESS
 } from "../actions/detail.action";
 
 export const detailReducer = (state = 0, action) => {

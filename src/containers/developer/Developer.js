@@ -13,7 +13,7 @@ class Developer extends Component {
         return (
             <div className="Developer">
                 <div className="Developer-title">
-                    <SubmitGame></SubmitGame>
+                    <SubmitGame title={"游戏提交"}></SubmitGame>
                     <FormGame></FormGame>
                 </div>
             </div>

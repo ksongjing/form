@@ -17,22 +17,25 @@ class Exchange extends Component {
 
     render() {
         const {title, items} = this.props;
-        return (
-            <div id="support" className="exchange">
-                <div className="container exchange-container">
-                    <h2>{title}</h2>
-                    <div className="exchange-items">
-                        {items && items.map((item) => {
-                            const {title, url, picture} = item;
-                            return (
-                                <a href={url} target="_blank" rel="noopener noreferrer" key={picture}>
-                                    <img src={picture} alt={title}/>
-                                </a>)
-                        })}
+        if (items && items.length > 0) {
+            return (
+                <div id="support" className="exchange">
+                    <div className="container exchange-container">
+                        <h2>{title}</h2>
+                        <div className="exchange-items">
+                            {items && items.map((item) => {
+                                const {title, url, picture} = item;
+                                return (
+                                    <a href={url} target="_blank" rel="noopener noreferrer" key={picture}>
+                                        <img src={picture} alt={title}/>
+                                    </a>)
+                            })}
+                        </div>
                     </div>
                 </div>
-            </div>
-        );
+            );
+        }
+        return (null);
     }
 }
 

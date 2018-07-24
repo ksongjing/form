@@ -1,8 +1,3 @@
-/***
- * @Author ChenLiheng
- * @Desc 首页容器组件
- * @Date 2018/7/14 16:19
- **/
 import React, {Component} from 'react';
 import intl from 'react-intl-universal';
 import './Home.scss';
@@ -10,6 +5,7 @@ import Slide from "../../components/home/slide/Slide";
 import {connect} from "react-redux";
 import PropTypes from 'prop-types';
 import {bindActionCreators} from "redux";
+import _ from "lodash"
 import {getFeatureData, getIndexData, getRoadMapData} from "../../actions/home.action";
 import Product from "../../components/home/product/Product";
 import Partner from "../../components/home/partner/Partner";
@@ -20,6 +16,11 @@ import Exchange from "../../components/home/exchange/Exchange";
 import RecommendGames from "../../components/home/recommendGames/RecommendGames";
 import Games from "../../components/home/games/Games";
 
+/***
+ * @Author ChenLiheng
+ * @Desc 首页容器组件
+ * @Date 2018/7/14 16:19
+ **/
 class Home extends Component {
     static propTypes = {
         slideData: PropTypes.array,
@@ -31,11 +32,12 @@ class Home extends Component {
         soonGamesData: PropTypes.array,
         blockAccess: PropTypes.number,
         roadMapData: PropTypes.array,
-        featureData: PropTypes.array
+        featureData: PropTypes.array,
+        curLang: PropTypes.string
     };
 
     componentDidMount() {
-        this.props.getIndexData();
+        this.props.getIndexData(this.props.curLang);
         this.props.getRoadMapData();
         this.props.getFeatureData();
     }
@@ -74,13 +76,16 @@ const mapStateToProps = (state) => {
         hotGamesData: indexData ? formatData(indexData.hot_games) : [],
         blockAccess: indexData ? indexData.block_access : 0,
         roadMapData: state.homeReducer.roadMapData,
-        featureData: state.homeReducer.featureData
+        featureData: state.homeReducer.featureData,
+        curLang: state.appReducer.curLanguage
     }
 };
 
 const formatData = (data) => {
     for (let item of data) {
-        item.picture = 'https://fair.game' + item.picture;
+        if (!_.startsWith(item.picture,"https://fair.game")) {
+            item.picture = 'https://fair.game' + item.picture;
+        }
     }
     return data;
 };

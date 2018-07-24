@@ -3,6 +3,7 @@ import styles from './GameBox.scss';
 import PropTypes from "prop-types";
 import classNames from 'classnames/bind';
 import LazyLoad from 'react-lazyload';
+import {CSSTransitionGroup} from "react-transition-group";
 
 let cx = classNames.bind(styles);
 
@@ -29,8 +30,16 @@ class GameBox extends Component {
         return (
             <a className={gameBoxClassName} href={url} target="_blank" rel="noopener noreferrer">
                 <div className="gamebox-top">
-                    <LazyLoad height={161}>
-                        <img src={picture} alt={title}/>
+                    <LazyLoad throttle={200} height={161}>
+                        <CSSTransitionGroup
+                            key="1"
+                            transitionName="fade"
+                            transitionAppear
+                            transitionAppearTimeout={500}
+                            transitionEnter={false}
+                            transitionLeave={false}>
+                            <img src={picture} alt={title}/>
+                        </CSSTransitionGroup>
                     </LazyLoad>
                     {
                         showFloat ? (<div className="gamebox-float"><span>{title}</span></div>) : (<div/>)
@@ -42,8 +51,6 @@ class GameBox extends Component {
                         <div className="gamebox-desc">{content}</div>
                     </div>) : (<div/>)
                 }
-                {/*<div className="gamebox-name">{title}</div>
-                <div className="gamebox-desc">{content}</div>*/}
             </a>
         );
     }

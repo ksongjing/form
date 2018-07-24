@@ -17,20 +17,23 @@ class Games extends Component {
 
     render() {
         const {title, items} = this.props;
-        return (
-            <div className="games">
-                <div className="container games-container">
-                    <div className="container-top"><h2>{title}</h2><Link to="/list"><div className="more"/></Link></div>
-                    <div className="game-items">
-                        {
-                            items && items.map((item,index) => {
-                                return (<GameBox showFloat={false} item={item} index={index} key={item.picture}/>);
-                            })
-                        }
+        if (items && items.length > 0) {
+            return (
+                <div className="games">
+                    <div className="container games-container">
+                        <div className="container-top"><h2>{title}</h2><Link to="/list"><div className="more"/></Link></div>
+                        <div className="game-items">
+                            {
+                                items && items.map((item,index) => {
+                                    return (<GameBox showFloat={false} item={item} index={index} key={item.picture}/>);
+                                })
+                            }
+                        </div>
                     </div>
                 </div>
-            </div>
-        );
+            );
+        }
+        return (null);
     }
 }
 

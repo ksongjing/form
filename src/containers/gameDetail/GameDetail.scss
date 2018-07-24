@@ -1,10 +1,9 @@
 @import "../../Theme";
 
-.gameDetail{
+.gamedetail{
   background: white ;
 
-  .cententView{
-    width: $mobile-container;
+  .gamedetail-cententView{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -12,11 +11,11 @@
   }
 }
 
-@media (min-width: 760px) {
-  .gameDetail{
+@media (min-width: $min-width) {
+  .gamedetail{
     background: white ;
 
-    .cententView{
+    .gamedetail-cententView{
       width: auto;
       margin-bottom: 50px;
     }
